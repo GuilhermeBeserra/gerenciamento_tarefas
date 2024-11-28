@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Tarefa{% endblock %}
+
+{% block content %}
+<h1>Editar Tarefa</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="tarefa_id" value="{{ tarefa.id }}">
+    
+    <div class="mb-3">
+        <label for="usuario" class="form-label">Usuário</label>
+        <select name="usuario" id="usuario" class="form-select" required>
+            <option value="">Selecione um usuário</option>
+            {% for usuario in usuarios %}
+            <option value="{{ usuario.id }}" {% if usuario.id == tarefa.usuario.id %}selected{% endif %}>{{ usuario.nome }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    
+    <div class="mb-3">
+        <label for="descricao" class="form-label">Descrição</label>
+        <textarea name="descricao" id="descricao" class="form-control" required>{{ tarefa.descricao }}</textarea>
+    </div>
+    
+    <div class="mb-3">
+        <label for="setor" class="form-label">Setor</label>
+        <input type="text" name="setor" id="setor" class="form-control" value="{{ tarefa.setor }}" required>
+    </div>
+    
+    <div class="mb-3">
+        <label for="prioridade" class="form-label">Prioridade</label>
+        <select name="prioridade" id="prioridade" class="form-select" required>
+            <option value="baixa" {% if tarefa.prioridade == 'baixa' %}selected{% endif %}>Baixa</option>
+            <option value="media" {% if tarefa.prioridade == 'media' %}selected{% endif %}>Média</option>
+            <option value="alta" {% if tarefa.prioridade == 'alta' %}selected{% endif %}>Alta</option>
+        </select>
+    </div>
+    
+    <div class="mb-3">
+        <label for="status" class="form-label">Status</label>
+        <select name="status" id="status" class="form-select" required>
+            <option value="a_fazer" {% if tarefa.status == 'a_fazer' %}selected{% endif %}>A Fazer</option>
+            <option value="fazendo" {% if tarefa.status == 'fazendo' %}selected{% endif %}>Fazendo</option>
+            <option value="pronto" {% if tarefa.status == 'pronto' %}selected{% endif %}>Pronto</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salvar</button>
+</form>
+{% endblock %}

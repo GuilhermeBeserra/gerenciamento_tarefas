@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Gerenciar Tarefas{% endblock %}
+
+{% block content %}
+<h1>Gerenciamento de Tarefas</h1>
+<div class="row">
+    {% for status, tarefas in tarefas.items %}
+    <div class="col-md-4">
+        <h3>{{ status|title }}</h3>
+        {% for tarefa in tarefas %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <p>{{ tarefa.descricao }}</p>
+                <p>Setor: {{ tarefa.setor }}</p>
+                <p>Prioridade: {{ tarefa.get_prioridade_display }}</p>
+                <p>Usuário: {{ tarefa.usuario.nome }}</p>
+                <p>Status: {{ tarefa.get_status_display }}</p>
+                <!-- Botão para abrir o modal de edição -->
+                <a href="{% url 'tarefas:editar_tarefa' tarefa.id %}" class="btn btn-warning">Editar</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

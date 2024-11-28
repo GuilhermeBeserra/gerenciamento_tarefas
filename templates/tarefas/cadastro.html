@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Cadastrar Tarefa{% endblock %}
+
+{% block content %}
+<h1>Cadastrar Tarefa</h1>
+
+{% if mensagem %}
+<div class="alert alert-success">{{ mensagem }}</div>
+{% endif %}
+{% if erro %}
+<div class="alert alert-danger">{{ erro }}</div>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="usuario" class="form-label">Usuário</label>
+        <select name="usuario" id="usuario" class="form-select" required>
+            <option value="">Selecione um usuário</option>
+            {% for usuario in usuarios %}
+            <option value="{{ usuario.id }}">{{ usuario.nome }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="descricao" class="form-label">Descrição</label>
+        <textarea name="descricao" id="descricao" class="form-control" required></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="setor" class="form-label">Setor</label>
+        <input type="text" name="setor" id="setor" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="prioridade" class="form-label">Prioridade</label>
+        <select name="prioridade" id="prioridade" class="form-select" required>
+            <option value="">Selecione uma prioridade</option>
+            <option value="baixa">Baixa</option>
+            <option value="media">Média</option>
+            <option value="alta">Alta</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Cadastrar</button>
+</form>
+{% endblock %}
